@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 
 function Provider({ children }) {
   const { user } = useUser(); //get user information from clerk
-  const [userDetail, setUserDatail] = useState()
+  const [userDetail , setUserDatail] = useState()
 
   useEffect(() => {
     user && CreateNewUser();
