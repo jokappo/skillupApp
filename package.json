@@ -26,6 +26,7 @@
     "drizzle-orm": "^0.44.2",
     "lucide-react": "^0.513.0",
     "mime": "^4.0.7",
+    "motion": "^12.18.1",
     "next": "15.2.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/react": "19.1.8",
     "drizzle-kit": "^0.31.1",
     "tailwindcss": "^4",
     "tsx": "^4.19.4",
