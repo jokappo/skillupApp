@@ -19,6 +19,7 @@ export const coursesTable = pgTable("courses", {
   level: varchar().notNull(),
   category: varchar(),
   couseJson: json(),
+  courseContent: json().default({}),
   userEmail: varchar("userEmail")
     .references(() => usersTable.email, {
       onDelete: "cascade",
