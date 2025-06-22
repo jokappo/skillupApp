@@ -27,3 +27,20 @@ export const coursesTable = pgTable("courses", {
     })
     .notNull(),
 });
+
+export const enroleCourseTable = pgTable("enroleCourse", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  cid: varchar("cid")
+    .references(() => coursesTable.cid, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    })
+    .notNull(),
+  userEmail: varchar("userEmail")
+    .references(() => usersTable.email, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    })
+    .notNull(),
+  completedChapiters: json().default({}),
+});
