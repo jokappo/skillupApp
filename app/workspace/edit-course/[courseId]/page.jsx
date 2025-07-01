@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import CourseInfo from "../_components/CourseInfo";
 import ChapiterTopicList from "../_components/ChapiterTopicList";
 
-function EditCourse() {
+function EditCourse({ viewCourse = false }) {
   const { courseId } = useParams();
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState();
@@ -36,7 +36,7 @@ function EditCourse() {
   return (
     <section>
       <div>
-        <CourseInfo course={course} />
+        <CourseInfo course={course} viewCourse={viewCourse} />
         <ChapiterTopicList course={course} />
       </div>
     </section>
