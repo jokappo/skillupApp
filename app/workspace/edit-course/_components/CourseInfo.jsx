@@ -1,5 +1,5 @@
 "use client";
-import { Clock, Settings } from "lucide-react";
+import { Clock, PlayCircleIcon, Settings } from "lucide-react";
 import React from "react";
 import AlarmClock from "./AlarmClock";
 import { Book } from "lucide-react";
@@ -12,12 +12,13 @@ import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-function CourseInfo({ course }) {
+function CourseInfo({ course, viewCourse }) {
   const [randomImage, setRandomImage] = useState();
   const [isImageChecked, setIsImageChecked] = useState(false); // Nouvel état pour indiquer si la vérification est terminée.
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const courseLayout = course?.couseJson?.course;
 
@@ -31,8 +32,8 @@ function CourseInfo({ course }) {
         courseId: course?.cid,
       });
       console.log(response.data);
-      router.replace('/workspace')
-      toast.success("Course content generated successfully!",{
+      router.replace("/workspace");
+      toast.success("Course content generated successfully!", {
         position: "buttom right",
       });
     } catch (error) {
@@ -98,20 +99,43 @@ function CourseInfo({ course }) {
           </div>
         </div>
 
-        <Button className="w-full" onClick={generateCourseContent} disabled={loading}>
-          {loading ? (
-            <div className="w-full flex justify-center gap-x-2 items-center">
-              <div className="w-3 h-3 rounded-full bg-[#d991c2] animate-bounce"></div>
-              <div className="w-3 h-3 rounded-full bg-[#9869b8] animate-bounce"></div>
-              <div className="w-3 h-3 rounded-full bg-[#6756cc] animate-bounce"></div>
-            </div>
-          ) : (
-            <>
-              <Settings />
-              Generate Content
-            </>
-          )}
-        </Button>
+        {!viewCourse ? (
+          <Button
+            className="w-full"
+            onClick={generateCourseContent}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="w-full flex justify-center gap-x-2 items-center">
+                <div className="w-3 h-3 rounded-full bg-[#d991c2] animate-bounce"></div>
+                <div className="w-3 h-3 rounded-full bg-[#9869b8] animate-bounce"></div>
+                <div className="w-3 h-3 rounded-full bg-[#6756cc] animate-bounce"></div>
+              </div>
+            ) : (
+              <>
+                <Settings />
+                Generate Content
+              </>
+            )}
+          </Button>
+        ) : (
+          <Link href={'/course/'+course?.cid}>
+            <Button className="w-full" disabled={loading}>
+              {loading ? (
+                <div className="w-full flex justify-center gap-x-2 items-center">
+                  <div className="w-3 h-3 rounded-full bg-[#d991c2] animate-bounce"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#9869b8] animate-bounce"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#6756cc] animate-bounce"></div>
+                </div>
+              ) : (
+                <>
+                  <PlayCircleIcon />
+                  Continue Learning
+                </>
+              )}
+            </Button>
+          </Link>
+        )}
       </div>
 
       {/* baner image */}
