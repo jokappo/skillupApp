@@ -3,6 +3,28 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+    scroll-behavior: smooth;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+    width: 10px;
+    @apply bg-slate-100
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb{
+    @apply bg-purple-100 rounded-full
+}
+
 @layer base {
   :root {
     --sidebar: oklch(0.985 0 0);
