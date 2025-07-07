@@ -75,6 +75,8 @@ export async function POST(req) {
 export async function GET(req) {
   try {
     const user = await currentUser();
+    const { searchParams } = new URL(req.url);
+    const courseId = searchParams.get("courseId");
 
     if (!user) {
       return NextResponse.json({
@@ -84,30 +86,73 @@ export async function GET(req) {
       });
     }
 
-    const response = await db
-      .select()
-      .from(coursesTable)
-      .innerJoin(enroleCourseTable, eq(coursesTable.cid, enroleCourseTable.cid))
-      .where(
-        eq(enroleCourseTable.userEmail, user?.primaryEmailAddress?.emailAddress)
-      )
-      .orderBy(desc(enroleCourseTable.id));
+    const email = user?.primaryEmailAddress?.emailAddress;
 
-    if (response.length === 0) {
+    let response;
+
+    if (courseId) {
+      response = await db
+        .select()
+        .from(coursesTable)
+        .innerJoin(
+          enroleCourseTable,
+          eq(coursesTable.cid, enroleCourseTable.cid)
+        )
+        .where(
+          and(
+            eq(coursesTable.cid, courseId),
+            eq(enroleCourseTable.userEmail, email)
+          )
+        )
+      if (response.length === 0) {
+        return NextResponse.json({
+          message: "No courses found for the user",
+          data: [],
+          success: true,
+          error: false,
+        });
+      }
+
       return NextResponse.json({
-        message: "No courses found for the user",
-        data: [],
+        message: "Course fetched successfully",
+        data: response[0],
+        success: true,
+        error: false,
+      });
+    } else {
+      response = await db
+        .select()
+        .from(coursesTable)
+        .innerJoin(
+          enroleCourseTable,
+          eq(coursesTable.cid, enroleCourseTable.cid)
+        )
+        .where(
+          eq(
+            enroleCourseTable.userEmail,
+            user?.primaryEmailAddress?.emailAddress
+          )
+        )
+        .orderBy(desc(enroleCourseTable.id));
+
+      if (response.length === 0) {
+        return NextResponse.json({
+          message: "No courses found for the user",
+          data: [],
+          success: true,
+          error: false,
+        });
+      }
+
+      return NextResponse.json({
+        message: "Courses fetched successfully",
+        data: response,
         success: true,
         error: false,
       });
     }
 
-    return NextResponse.json({
-      message: "Courses fetched successfully",
-      data: response,
-      success: true,
-      error: false,
-    });
+
   } catch (error) {
     console.error("Error fetching enrolled courses:", error);
     return NextResponse.json({
