@@ -103,7 +103,7 @@ export async function GET(req) {
             eq(coursesTable.cid, courseId),
             eq(enroleCourseTable.userEmail, email)
           )
-        )
+        );
       if (response.length === 0) {
         return NextResponse.json({
           message: "No courses found for the user",
@@ -151,12 +151,74 @@ export async function GET(req) {
         error: false,
       });
     }
-
-
   } catch (error) {
     console.error("Error fetching enrolled courses:", error);
     return NextResponse.json({
       message: "An error occurred while fetching courses",
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function PUT(req) {
+  try {
+    const { courseId, completedChapter } = await req.json();
+    const user = await currentUser();
+
+    if (!user) {
+      return NextResponse.json({
+        message: "User not authenticated",
+        error: true,
+        success: false,
+      });
+    }
+
+    if (!courseId || !Array.isArray(completedChapter)) {
+      return NextResponse.json({
+        message: "Invalid input: courseId or completedChapter missing/invalid",
+        error: true,
+        success: false,
+      });
+    }
+
+    console.log("Updating course progress for user:", user?.primaryEmailAddress?.emailAddress);
+    console.log("Course ID:", courseId);
+    console.log("Completed chapters:", completedChapter);
+
+    const response = await db
+      .update(enroleCourseTable)
+      .set({
+        completedChapiters: completedChapter,
+      })
+      .where(
+        and(
+          eq(enroleCourseTable.cid, courseId),
+          eq(enroleCourseTable.userEmail, user?.primaryEmailAddress?.emailAddress)
+        )
+      )
+      .returning(enroleCourseTable);
+
+    if (response.length === 0) {
+      return NextResponse.json({
+        message: "No enrollment record found for this user and course.",
+        data: [],
+        success: false,
+        error: true,
+      });
+    }
+
+    return NextResponse.json({
+      message: "Course completion progress updated successfully.",
+      data: response[0],
+      success: true,
+      error: false,
+    });
+
+  } catch (error) {
+    console.error("Error updating course progress:", error);
+    return NextResponse.json({
+      message: "An error occurred while updating the course progress.",
       error: true,
       success: false,
     });
