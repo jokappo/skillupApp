@@ -78,7 +78,7 @@ function AddNewCourseDialogue({ children }) {
         ...formData,
         courseId: courseId,
       });
-      console.log("Course Generation Result:", result?.data?.data?.courseId);
+
       toast.success(result.data.message, {
         duration: 5000,
         position: "top-right",
@@ -87,6 +87,12 @@ function AddNewCourseDialogue({ children }) {
           color: "#fff",
         },
       });
+      
+      if (result?.data?.message === "limite exceeded") {
+        toast.error("You have reached the limit of courses you can create. please upgrade your plan.");
+        router.push('/workspace/billing')
+        return;
+      }
 
       // Reset form data
       setFormData({
