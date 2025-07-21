@@ -42,7 +42,7 @@ function EnroleCourseList() {
             <EnrollCourseCart
               key={index}
               course={course?.courses}
-              enrollCourse={course?.enrollCourse}
+              enrollCourse={course?.enroleCourse}
             />
           ))}
         </div>
