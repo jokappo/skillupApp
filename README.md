@@ -1,8 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Project Starter
 
-## Getting Started
+Welcome! This project was bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, run the development server:
+## 🚀 Getting Started
+
+To start the development server, run:
 
 ```bash
 npm run dev
@@ -14,23 +16,44 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) in your browser to view your app.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Edit `app/page.js` to update the homepage. Changes are reflected automatically.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Features
 
-## Learn More
+- Uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) for optimized font loading ([Geist](https://vercel.com/font)).
+- Fast refresh for instant updates.
+- File-based routing.
 
-To learn more about Next.js, take a look at the following resources:
+## 📚 Learn More
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Explore these resources to deepen your Next.js knowledge:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn) - interactive tutorial
+- [Next.js GitHub Repository](https://github.com/vercel/next.js) - contribute or give feedback
 
-## Deploy on Vercel
+## 🚢 Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deploy your Next.js app easily with [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See the [deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 🔑 Environment Variables
+
+Add your secrets to a `.env.local` file:
+
+```env
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
+DATABASE_URL=
+NEXT_PUBLIC_DATABASE_URL=
+GEMINI_API_KEY=
+AI_GURU_LAB_API_KEY=
+YOUTUBE_API_KEY=
+```
+
+---
+
+Happy coding!
+
