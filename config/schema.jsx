@@ -42,5 +42,5 @@ export const enroleCourseTable = pgTable("enroleCourse", {
       onUpdate: "cascade",
     })
     .notNull(),
-  completedChapiters: json().default({}),
+  completedChapiters: json().default([]),
 });
