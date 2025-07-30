@@ -61,7 +61,11 @@ export async function POST(req, res) {
   const user = await currentUser();
 
   const { has } = await auth();
-  const hasBronzePlan = has({ plan: "starter" });
+
+  const isFree = has({ plan: "free" });
+  // ou selon ta logique exacte, adapte :
+  const isStarter = has({ plan: "starter" });
+  const isPremium = has({ plan: "premium" });
 
   // To run this code you need to install the following dependencies:
   // npm install @google/genai mime
@@ -83,8 +87,14 @@ export async function POST(req, res) {
   ];
 
   //if user already created any course
-  if (!hasBronzePlan) {
-    const result = await db.select().from(coursesTable).where(eq(coursesTable.userEmail, user?.primaryEmailAddress?.emailAddress));
+  // Vérifie la limite uniquement si le plan est free
+  if (isFree) {
+    const result = await db
+      .select()
+      .from(coursesTable)
+      .where(
+        eq(coursesTable.userEmail, user?.primaryEmailAddress?.emailAddress)
+      );
     if (result?.length >= 1) {
       return NextResponse.json({
         message: "limite exceeded",
